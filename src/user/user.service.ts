@@ -8,7 +8,7 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async create(createUserDto: CreateUserDto) {
-    const { email, password, name } = createUserDto;
+    const { email, password, name, cpf } = createUserDto;
 
     const user = await this.userRepository.get({
       where: {
@@ -25,6 +25,7 @@ export class UserService {
         email,
         password: passHashed,
         name,
+        cpf
       },
     });
 
