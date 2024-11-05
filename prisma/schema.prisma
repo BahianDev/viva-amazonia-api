@@ -8,9 +8,8 @@ datasource db {
 }
 
 enum TipoDeArea {
-  Consolidada
-  ReservaLegal
-  UsoAlternativoDoSolo
+  RL
+  UAS
 }
 
 enum CicloProducao {
