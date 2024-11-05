@@ -10,6 +10,7 @@ datasource db {
 enum TipoDeArea {
   RL
   UAS
+  C
 }
 
 enum CicloProducao {

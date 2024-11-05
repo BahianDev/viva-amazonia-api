@@ -3,6 +3,8 @@ import { IsNotEmpty, IsString, IsNumber, IsDate, IsBoolean, IsArray, IsOptional,
 enum TipoDeArea {
   RL = 'RL',
   UAS = 'UAS',
+  C = 'C',
+
 }
 
 enum CicloProducao {
