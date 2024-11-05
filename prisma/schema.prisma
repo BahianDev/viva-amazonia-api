@@ -7,28 +7,110 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TipoDeArea {
+  Consolidada
+  ReservaLegal
+  UsoAlternativoDoSolo
+}
+
+enum CicloProducao {
+  Anual
+  Bianual
+  Bimestral
+  Semestral
+}
+
+enum ComoCompensar {
+  AquisicaoCota
+  Arrendamento
+  Doacao
+  Cadastramento
+}
+
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
-  name      String
-  password  String
-  cpf       String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                     String                  @id @default(auto()) @map("_id") @db.ObjectId
+  email                  String                  @unique
+  name                   String
+  password               String
+  cpf                    String
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  PlanoProdutivo         PlanoProdutivo[]
+  RegularizacaoSanitaria RegularizacaoSanitaria?
+  RegularizacaoAmbiental RegularizacaoAmbiental?
+  RegularizacaoFundiaria RegularizacaoFundiaria?
 }
 
-model Environmental {
-  id             String  @id @default(auto()) @map("_id") @db.ObjectId
-  carNumber      String?
-  isLegalReserve Boolean
+model RegularizacaoFundiaria {
+  id                            String   @id @default(auto()) @map("_id") @db.ObjectId
+  possuiCafDap                  Boolean
+  cafDapComp                    String?
+  possuiSigef                   Boolean
+  sigefComp                     String?
+  registCartorioLote            Boolean
+  possuiBaseTopoSigef           Boolean
+  encontrouProfParaLevantamento Boolean
+  localizacao                   String
+  ccirNoSncrDoIncra             Boolean
+  ccirNoSncrDoIncraComp         String?
+  userId                        String   @unique @db.ObjectId
+  user                          User     @relation(fields: [userId], references: [id])
+  createdAt                     DateTime @default(now())
+  updatedAt                     DateTime @updatedAt
 }
 
-model Production {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  type            String
-  cycle           String
-  sizePlantedArea Float
-  datePlantedArea DateTime
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+model RegularizacaoAmbiental {
+  id                           String        @id @default(auto()) @map("_id") @db.ObjectId
+  possuiCar                    Boolean
+  carComp                      String?
+  possuiReservaLegal           Boolean
+  reservaLegalRegularizada     Boolean
+  reservaLegalRegularizadaComp String?
+  desejaRegReservaLegal        Boolean
+  excedenteVegNatReservaLegal  Boolean
+  comoCompensar                ComoCompensar
+  userId                       String        @unique @db.ObjectId
+  user                         User          @relation(fields: [userId], references: [id])
+  createdAt                    DateTime      @default(now())
+  updatedAt                    DateTime      @updatedAt
+}
+
+model RegularizacaoSanitaria {
+  id                         String   @id @default(auto()) @map("_id") @db.ObjectId
+  licenca                    Boolean
+  licencaComp                String?
+  produtosAgricolas          String
+  controleDePragas           Boolean
+  usaProdutosQuimicos        Boolean
+  armazenamentoProdutos      String
+  tratamentoResiduoAgricolas Boolean
+  userId                     String   @unique @db.ObjectId
+  user                       User     @relation(fields: [userId], references: [id])
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
+}
+
+model PlanoProdutivo {
+  id                           String        @id @default(auto()) @map("_id") @db.ObjectId
+  endereco                     String
+  tipoDeArea                   TipoDeArea
+  dataInicioPlantio            DateTime
+  usaFertilizantes             Boolean
+  usaPesticidas                Boolean
+  hectare                      Float
+  linhas                       Int
+  espacamento                  Int
+  quantMudasFlorestais         Int
+  quantMudasFrutiferas         Int
+  calcario                     Int
+  adulboOrganico               Int
+  especiesMudasFlorestais      String[]
+  especiesMudasFlorestaisOutro String?
+  especiesMudasFrutiferas      String[]
+  especiesMudasFrutiferasOutro String?
+  clicloProducao               CicloProducao
+  userId                       String        @db.ObjectId
+  user                         User          @relation(fields: [userId], references: [id])
+  createdAt                    DateTime      @default(now())
+  updatedAt                    DateTime      @updatedAt
 }

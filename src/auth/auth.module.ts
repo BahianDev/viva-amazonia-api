@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { UserService } from 'src/user/user.service';
 import { PrismaService } from 'src/common/prisma.service';
 import { UserRepository } from 'src/user/user.repository';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from './strategies/local-strategy';
 import { JwtStrategy } from './strategies/ jwt-strategy';
 import { RefreshJwtStrategy } from './strategies/refreshToken.strategy';
