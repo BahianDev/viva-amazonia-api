@@ -1,9 +1,8 @@
 import { IsNotEmpty, IsString, IsNumber, IsDate, IsBoolean, IsArray, IsOptional, IsDateString } from 'class-validator';
 
 enum TipoDeArea {
-  Consolidada = 'Consolidada',
-  ReservaLegal = 'ReservaLegal',
-  UsoAlternativoDoSolo = 'UsoAlternativoDoSolo',
+  RL = 'RL',
+  UAS = 'UAS',
 }
 
 enum CicloProducao {
