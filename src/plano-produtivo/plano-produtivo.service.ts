@@ -67,7 +67,11 @@ export class PlanoProdutivoService {
   }
 
   async getAll() {
-    const productions = await this.planoProdutivoRepository.getAll();
+    const productions = await this.planoProdutivoRepository.getAll({
+      include: {
+        user: true
+      }
+    });
     return productions;
   }
 }
