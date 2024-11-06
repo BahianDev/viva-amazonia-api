@@ -109,11 +109,21 @@ export class PlanoProdutivoService {
     const mudasFrutiferas = productions.map(p => p.quantMudasFrutiferas)
     const mudasFrutiferasSum = mudasFrutiferas.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0);
 
+    const planosRL = productions.filter(p => p.tipoDeArea === 'RL').length
+    const planosUAS = productions.filter(p => p.tipoDeArea === 'UAS').length
+    const planosC = productions.filter(p => p.tipoDeArea === 'C').length
+
+
 
     return {
       quantTotalHectares: hectaresSum,
       quantTotalMudasFlorestais: mudasFlorestaisSum,
-      quantTotalMudasFrutiferas: mudasFrutiferasSum
+      quantTotalMudasFrutiferas: mudasFrutiferasSum,
+      planosPorArea: {
+        planosRL,
+        planosUAS,
+        planosC
+      }
     }
   }
 }
