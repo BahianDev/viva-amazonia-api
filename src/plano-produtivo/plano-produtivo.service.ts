@@ -72,8 +72,12 @@ export class PlanoProdutivoService {
         user: true
       }
     });
-    return productions;
+    return productions.map(prod => {
+      return { ...prod, mudasTotais: prod.quantMudasFlorestais + prod.quantMudasFrutiferas }
+    })
+
   }
+
 
   async get(id: string) {
     const production = await this.planoProdutivoRepository.get({

@@ -20,7 +20,7 @@ export class PlanoProdutivoController {
   }
 
   @Get()
-  findInfo() {
+  getAll() {
     return this.planoProdutivoService.getAll();
   }
 }
