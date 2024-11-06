@@ -6,7 +6,7 @@ import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 @Controller('plano-produtivo')
 export class PlanoProdutivoController {
-  constructor(private readonly planoProdutivoService: PlanoProdutivoService) {}
+  constructor(private readonly planoProdutivoService: PlanoProdutivoService) { }
 
   @UseGuards(JwtGuard)
   @Post()
@@ -22,5 +22,10 @@ export class PlanoProdutivoController {
   @Get()
   getAll() {
     return this.planoProdutivoService.getAll();
+  }
+
+  @Get('info')
+  getInfo() {
+    return this.planoProdutivoService.getInfo();
   }
 }

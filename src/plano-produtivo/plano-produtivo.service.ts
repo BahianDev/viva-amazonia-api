@@ -72,6 +72,7 @@ export class PlanoProdutivoService {
         user: true
       }
     });
+
     return productions.map(prod => {
       return { ...prod, mudasTotais: prod.quantMudasFlorestais + prod.quantMudasFrutiferas }
     })
@@ -90,5 +91,29 @@ export class PlanoProdutivoService {
     })
 
     return production
+  }
+
+  async getInfo() {
+    const productions = await this.planoProdutivoRepository.getAll({
+      include: {
+        user: true
+      }
+    });
+
+    const hectares = productions.map(p => p.hectare)
+    const hectaresSum = hectares.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0);
+
+    const mudasFlorestais = productions.map(p => p.quantMudasFlorestais)
+    const mudasFlorestaisSum = mudasFlorestais.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0);
+
+    const mudasFrutiferas = productions.map(p => p.quantMudasFrutiferas)
+    const mudasFrutiferasSum = mudasFrutiferas.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0);
+
+
+    return {
+      quantTotalHectares: hectaresSum,
+      quantTotalMudasFlorestais: mudasFlorestaisSum,
+      quantTotalMudasFrutiferas: mudasFrutiferasSum
+    }
   }
 }
