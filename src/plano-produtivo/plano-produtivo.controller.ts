@@ -24,7 +24,7 @@ export class PlanoProdutivoController {
     return this.planoProdutivoService.getAll();
   }
 
-  @Get('info')
+  @Get('info/dash')
   getInfo() {
     return this.planoProdutivoService.getInfo();
   }
