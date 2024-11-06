@@ -74,4 +74,17 @@ export class PlanoProdutivoService {
     });
     return productions;
   }
+
+  async get(id: string) {
+    const production = await this.planoProdutivoRepository.get({
+      where: {
+        id
+      },
+      include: {
+        user: true
+      }
+    })
+
+    return production
+  }
 }
