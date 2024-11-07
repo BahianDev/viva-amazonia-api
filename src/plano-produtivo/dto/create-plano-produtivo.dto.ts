@@ -82,4 +82,12 @@ export class CreatePlanoProdutivoDto {
   @IsString()
   @IsNotEmpty()
   clicloProducao: CicloProducao;
+
+  @IsString()
+  @IsNotEmpty()
+  lat: string;
+
+  @IsString()
+  @IsNotEmpty()
+  lng: string;
 }

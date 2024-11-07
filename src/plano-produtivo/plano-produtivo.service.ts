@@ -29,6 +29,8 @@ export class PlanoProdutivoService {
       especiesMudasFrutiferas,
       especiesMudasFrutiferasOutro,
       clicloProducao,
+      lat,
+      lng
     } = createPlanoProdutivoDto;
 
     const user = await this.userRepository.get({
@@ -61,6 +63,8 @@ export class PlanoProdutivoService {
         especiesMudasFrutiferas,
         especiesMudasFrutiferasOutro,
         clicloProducao,
+        lat,
+        lng
       },
     });
     return planoProdutivo;
