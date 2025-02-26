@@ -80,7 +80,6 @@ export class PlanoProdutivoService {
     return productions.map(prod => {
       return { ...prod, mudasTotais: prod.quantMudasFlorestais + prod.quantMudasFrutiferas }
     })
-
   }
 
 
@@ -116,8 +115,6 @@ export class PlanoProdutivoService {
     const planosRL = productions.filter(p => p.tipoDeArea === 'RL').length
     const planosUAS = productions.filter(p => p.tipoDeArea === 'UAS').length
     const planosC = productions.filter(p => p.tipoDeArea === 'C').length
-
-
 
     return {
       quantTotalHectares: hectaresSum,

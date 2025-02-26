@@ -8,6 +8,7 @@ import { PlanoProdutivoModule } from './plano-produtivo/plano-produtivo.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { ProdutorModule } from './produtor/produtor.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ConfigModule } from '@nestjs/config';
     PlanoProdutivoModule,
     UserModule,
     AuthModule,
+    ProdutorModule
   ],
   controllers: [AppController],
   providers: [AppService],
