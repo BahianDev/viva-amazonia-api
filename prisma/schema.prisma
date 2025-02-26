@@ -121,6 +121,7 @@ model Produtor {
   id                       String   @id @default(auto()) @map("_id") @db.ObjectId
   nome                     String
   endereco                 String
+  ano                      Int
   areas                    String[]
   pfp                      String
   email                    String
