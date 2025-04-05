@@ -23,6 +23,7 @@ export class HopeGreenService {
 
     const enrichedListings = await Promise.all(
       listings.map(async (listing: any) => {
+        console.log(listing)
         // Converte o tokenId diretamente para string
         const tokenId = Number(listing.tokenId);
         const price = Number(listing.price);
