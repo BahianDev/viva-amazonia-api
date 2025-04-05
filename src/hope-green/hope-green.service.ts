@@ -25,8 +25,8 @@ export class HopeGreenService {
       listings.map(async (listing: any) => {
         console.log(listing)
         // Converte o tokenId diretamente para string
-        const tokenId = Number(listing.tokenId);
-        const price = Number(listing.price);
+        const tokenId = Number(listing[0]);
+        const price = Number(listing[1]);
         const metadataUrl = `https://hope-green.s3.us-east-2.amazonaws.com/metadata/${tokenId}.json`;
         let metadata = null;
         try {
