@@ -16,11 +16,28 @@ export class HopeGreenService {
     const contract = new ethers.Contract(
       MARKETPLACE_CONTRACT_ADDRESS,
       MARKETPLACE_ABI,
-      provider,
+      provider
     );
-
+  
     const listings = await contract.getActiveListings();
-
-    return listings;
+  
+    const enrichedListings = await Promise.all(
+      listings.map(async (listing) => {
+        const tokenId = listing.tokenId.toString();
+        const metadataUrl = `https://hope-green.s3.us-east-2.amazonaws.com/metadata/${tokenId}.json`;
+        let metadata = null;
+        try {
+          const response = await fetch(metadataUrl);
+          metadata = await response.json();
+        } catch (error) {
+          console.error(`Erro ao buscar metadata para tokenId ${tokenId}:`, error);
+        }
+        
+        return { ...listing, metadata };
+      })
+    );
+  
+    return enrichedListings;
   }
+  
 }
