@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProdutorModule } from './produtor/produtor.module';
+import { HopeGreenModule } from './hope-green/hope-green.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { ProdutorModule } from './produtor/produtor.module';
     PlanoProdutivoModule,
     UserModule,
     AuthModule,
-    ProdutorModule
+    ProdutorModule,
+    HopeGreenModule
   ],
   controllers: [AppController],
   providers: [AppService],
