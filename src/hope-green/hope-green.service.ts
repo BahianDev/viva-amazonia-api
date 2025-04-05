@@ -23,10 +23,12 @@ export class HopeGreenService {
 
     const enrichedListings = await Promise.all(
       listings.map(async (listing: any) => {
-        console.log(listing)
+        console.log(listing);
         // Converte o tokenId diretamente para string
         const tokenId = Number(listing[0]);
         const price = Number(listing[1]);
+
+        console.log(tokenId, price);
         const metadataUrl = `https://hope-green.s3.us-east-2.amazonaws.com/metadata/${tokenId}.json`;
         let metadata = null;
         try {
@@ -38,7 +40,7 @@ export class HopeGreenService {
             error,
           );
         }
-        return { ...listing, price, tokenId, metadata };
+        return { price, tokenId, metadata };
       }),
     );
 
