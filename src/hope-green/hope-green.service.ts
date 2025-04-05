@@ -23,13 +23,10 @@ export class HopeGreenService {
 
     const enrichedListings = await Promise.all(
       listings.map(async (listing: any) => {
-        console.log(listing);
-        // Converte o tokenId diretamente para string
         const tokenId = Number(listing[0]);
         const price = Number(listing[1]);
         const listed = listing[2];
 
-        console.log(tokenId, price);
         const metadataUrl = `https://hope-green.s3.us-east-2.amazonaws.com/metadata/${tokenId}.json`;
         let metadata = null;
         try {
@@ -46,5 +43,32 @@ export class HopeGreenService {
     );
 
     return enrichedListings;
+  }
+
+  async getListingById(tokenId) {
+    const provider = this.provider();
+    const contract = new ethers.Contract(
+      MARKETPLACE_CONTRACT_ADDRESS,
+      MARKETPLACE_ABI,
+      provider,
+    );
+
+    const listing = await contract.listings(tokenId);
+
+    const id = Number(listing[0]);
+    const price = Number(listing[1]);
+    const listed = listing[2];
+
+    const metadataUrl = `https://hope-green.s3.us-east-2.amazonaws.com/metadata/${id}.json`;
+
+    let metadata = null;
+    try {
+      const response = await fetch(metadataUrl);
+      metadata = await response.json();
+    } catch (error) {
+      console.error(`Erro ao buscar metadata para tokenId ${id}:`, error);
+    }
+
+    return { price, tokenId: id, listed, metadata };
   }
 }
