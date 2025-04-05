@@ -27,6 +27,7 @@ export class HopeGreenService {
         // Converte o tokenId diretamente para string
         const tokenId = Number(listing[0]);
         const price = Number(listing[1]);
+        const listed = listing[2];
 
         console.log(tokenId, price);
         const metadataUrl = `https://hope-green.s3.us-east-2.amazonaws.com/metadata/${tokenId}.json`;
@@ -40,7 +41,7 @@ export class HopeGreenService {
             error,
           );
         }
-        return { price, tokenId, metadata };
+        return { price, tokenId, listed, metadata };
       }),
     );
 
