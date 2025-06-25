@@ -83,12 +83,14 @@ export class HopeGreenService {
     const provider = this.provider();
     const nftContract = new ethers.Contract(
       NFT_CONTRACT_ADDRESS,
-      NFT_CONTRACT_ADDRESS,
+      NFT_ABI,
       provider,
     );
 
     const balanceBN = await nftContract.balanceOf(ownerAddress);
     const balance = Number(balanceBN);
+
+    console.log(balance)
 
     const indices = Array.from({ length: balance }, (_, i) => i);
 
