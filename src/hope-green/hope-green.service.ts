@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { ethers } from 'ethers';
-import { MARKETPLACE_ABI, MARKETPLACE_CONTRACT_ADDRESS } from 'src/constants';
+import {
+  MARKETPLACE_ABI,
+  MARKETPLACE_CONTRACT_ADDRESS,
+  NFT_CONTRACT_ADDRESS,
+  NFT_ABI,
+} from 'src/constants';
 
 @Injectable()
 export class HopeGreenService {
@@ -70,5 +75,48 @@ export class HopeGreenService {
     }
 
     return { price, tokenId: id, listed, metadata };
+  }
+
+  async getNFTsByOwner(
+    ownerAddress: string,
+  ): Promise<{ tokenId: number; metadata: any }[]> {
+    const provider = this.provider();
+    const nftContract = new ethers.Contract(
+      NFT_CONTRACT_ADDRESS,
+      NFT_CONTRACT_ADDRESS,
+      provider,
+    );
+
+    const balanceBN = await nftContract.balanceOf(ownerAddress);
+    const balance = balanceBN.toNumber();
+
+    const indices = Array.from({ length: balance }, (_, i) => i);
+
+    const tokenIds: number[] = await Promise.all(
+      indices.map((index) =>
+        nftContract
+          .tokenOfOwnerByIndex(ownerAddress, index)
+          .then((bn: ethers.BigNumberish) => Number(bn)),
+      ),
+    );
+
+    const nfts = await Promise.all(
+      tokenIds.map(async (tokenId) => {
+        const metadataUrl = `https://hope-green.s3.us-east-2.amazonaws.com/metadata/${tokenId}.json`;
+        let metadata = null;
+        try {
+          const response = await fetch(metadataUrl);
+          metadata = await response.json();
+        } catch (error) {
+          console.error(
+            `Erro ao buscar metadata para tokenId ${tokenId}:`,
+            error,
+          );
+        }
+        return { tokenId, metadata };
+      }),
+    );
+
+    return nfts;
   }
 }
