@@ -100,6 +100,8 @@ export class HopeGreenService {
       ),
     );
 
+    console.log(tokenIds)
+
     const nfts = await Promise.all(
       tokenIds.map(async (tokenId) => {
         const metadataUrl = `https://hope-green.s3.us-east-2.amazonaws.com/metadata/${tokenId}.json`;
