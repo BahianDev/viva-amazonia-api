@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { HopeGreenService } from './hope-green.service';
 
 @Controller('hope-green')
@@ -16,7 +16,13 @@ export class HopeGreenController {
   }
 
   @Get('wallet/:address')
-  getNFTsByOwner(@Param('address') address: string) {
-    return this.hopeGreenService.getNFTsByOwner(address);
+  getNFTsByOwner(
+    @Param('address') address: string,
+    @Query('page') page = '1',
+    @Query('pageSize') pageSize = '10',
+  ) {
+    const p = parseInt(page, 10);
+    const size = parseInt(pageSize, 10);
+    return this.hopeGreenService.getNFTsByOwner(address, p, size);
   }
 }

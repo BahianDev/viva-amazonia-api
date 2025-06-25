@@ -79,6 +79,8 @@ export class HopeGreenService {
 
   async getNFTsByOwner(
     ownerAddress: string,
+    page = 1,
+    pageSize = 10,
   ): Promise<{ tokenId: number; metadata: any }[]> {
     const provider = this.provider();
     const nftContract = new ethers.Contract(
@@ -88,35 +90,35 @@ export class HopeGreenService {
     );
 
     const balanceBN = await nftContract.balanceOf(ownerAddress);
-    const balance = 10
+    const total = Number(balanceBN);
 
-    console.log(balance)
+    const offset = (page - 1) * pageSize;
+    const count = Math.min(pageSize, total - offset);
+    if (count <= 0) {
+      return [];
+    }
 
-    const indices = Array.from({ length: balance }, (_, i) => i);
-
-    console.log(indices)
+    const indices = Array.from({ length: count }, (_, i) => offset + i);
 
     const tokenIds: number[] = await Promise.all(
-      indices.map((index) =>
+      indices.map((idx) =>
         nftContract
-          .tokenOfOwnerByIndex(ownerAddress, index)
+          .tokenOfOwnerByIndex(ownerAddress, idx)
           .then((bn: ethers.BigNumberish) => Number(bn)),
       ),
     );
-
-    console.log(tokenIds)
 
     const nfts = await Promise.all(
       tokenIds.map(async (tokenId) => {
         const metadataUrl = `https://hope-green.s3.us-east-2.amazonaws.com/metadata/${tokenId}.json`;
         let metadata = null;
         try {
-          const response = await fetch(metadataUrl);
-          metadata = await response.json();
-        } catch (error) {
+          const res = await fetch(metadataUrl);
+          metadata = await res.json();
+        } catch (err) {
           console.error(
             `Erro ao buscar metadata para tokenId ${tokenId}:`,
-            error,
+            err,
           );
         }
         return { tokenId, metadata };
