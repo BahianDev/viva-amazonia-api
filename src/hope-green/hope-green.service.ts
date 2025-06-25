@@ -88,7 +88,7 @@ export class HopeGreenService {
     );
 
     const balanceBN = await nftContract.balanceOf(ownerAddress);
-    const balance = Number(balanceBN) - 1;
+    const balance = 10
 
     console.log(balance)
 
