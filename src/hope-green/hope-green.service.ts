@@ -94,6 +94,8 @@ export class HopeGreenService {
 
     const indices = Array.from({ length: balance }, (_, i) => i);
 
+    console.log(indices)
+
     const tokenIds: number[] = await Promise.all(
       indices.map((index) =>
         nftContract
