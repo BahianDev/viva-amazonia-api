@@ -127,4 +127,22 @@ export class HopeGreenService {
 
     return nfts;
   }
+
+  async getNftByTokenId(tokenId) {
+    const provider = this.provider();
+    const nftContract = new ethers.Contract(
+      NFT_CONTRACT_ADDRESS,
+      NFT_ABI,
+      provider,
+    );
+
+    const owner = await nftContract.ownerOf(Number(tokenId));
+
+    const metadataUrl = `https://hope-green.s3.us-east-2.amazonaws.com/metadata/${tokenId}.json`;
+
+    const res = await fetch(metadataUrl);
+    const metadata = await res.json();
+
+    return { owner, metadata };
+  }
 }

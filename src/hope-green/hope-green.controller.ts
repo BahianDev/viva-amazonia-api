@@ -15,6 +15,11 @@ export class HopeGreenController {
     return this.hopeGreenService.getListingById(Number(id));
   }
 
+  @Get('nft/:id')
+  getNftById(@Param('id') id: string) {
+    return this.hopeGreenService.getNftByTokenId(Number(id));
+  }
+
   @Get('wallet/:address')
   getNFTsByOwner(
     @Param('address') address: string,
