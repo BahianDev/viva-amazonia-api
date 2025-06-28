@@ -10,4 +10,14 @@ export class ProdutorService {
 
     return produtores;
   }
+
+  async get(id: string) {
+    const produtor = await this.produtorRepository.get({
+      where: {
+        id,
+      }
+    });
+
+    return produtor;
+  }
 }
