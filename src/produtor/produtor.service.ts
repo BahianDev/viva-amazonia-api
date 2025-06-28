@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ProdutorRepository } from './produtor.repository';
 
 @Injectable()
@@ -17,6 +17,10 @@ export class ProdutorService {
         id,
       }
     });
+
+    if (!produtor) {
+     throw new BadRequestException("Produtor not found")
+    }
 
     return produtor;
   }
