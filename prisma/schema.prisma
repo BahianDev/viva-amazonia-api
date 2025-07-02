@@ -136,4 +136,6 @@ model Produtor {
   especiesMudasFlorestais  String[]
   especiesMudasFrutiferas  String[]
   especiesMudasIndustriais String[]
+  wallet                   String
+  supply                   Int
 }
